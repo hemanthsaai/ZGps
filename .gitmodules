@@ -1,0 +1,8 @@
+[submodule "GPS_LIB"]
+	path = GPS_LIB
+	url = https://github.com/hemanthsaai/GPS_LIB.git
+	branch = master
+[submodule "Submodules/GPS_LIB"]
+	path = Submodules/GPS_LIB
+	url = https://github.com/hemanthsaai/GPS_LIB.git
+	branch = master
