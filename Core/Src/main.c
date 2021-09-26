@@ -43,7 +43,9 @@
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-
+int sw = 0;
+volatile uint8_t uart_databuf[1000] = {0};
+uint32_t *pointer = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -89,7 +91,7 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_UART_Receive_IT(&huart2, uart_databuf, 600);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -98,9 +100,20 @@ int main(void)
   {
     /* USER CODE END WHILE */
 
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
+	  HAL_Delay(1000);
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
+	  HAL_Delay(1000);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+
+	HAL_UART_Receive_IT(&huart2, uart_databuf, 600);
+	HAL_UART_Transmit_IT(&huart2, uart_databuf, 600);
 }
 
 /**
@@ -224,7 +237,10 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
+while(1)
+{
 
+}
   /* USER CODE END Error_Handler_Debug */
 }
 
